@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { Task } from './task.model';
 import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
@@ -8,7 +9,7 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get() // handle GET requests sent to /tasks
-  getAllTasks() {
+  getAllTasks(): Task[] {
     return this.tasksService.getAllTasks();
   }
 }
