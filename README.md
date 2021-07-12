@@ -10,4 +10,4 @@
 ## Create tasks service
 - Run `nest g service tasks --no-spec`
 - This will generate */tasks/tasks.service.ts*, and update *tasks.module.ts* to add `TasksService` to service providers
-- Now `TasksService` can be injected into `TasksController`'s constructor, and initialised as a private property
+- Now `TasksService` can be injected into the constructor of `TasksController`, and initialised as a private property
