@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
@@ -6,4 +6,9 @@ import { TasksService } from './tasks.service';
 export class TasksController {
   // inject TasksService into TasksController, and initialise it as a private property
   constructor(private tasksService: TasksService) {}
+
+  @Get() // handle GET requests sent to /tasks
+  getAllTasks() {
+    return this.tasksService.getAllTasks();
+  }
 }
