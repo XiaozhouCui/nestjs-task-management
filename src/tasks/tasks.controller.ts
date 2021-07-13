@@ -1,6 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { Task } from './task.model';
+import { Task, TaskStatus } from './task.model';
 import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
@@ -29,6 +37,14 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
   ): Task {
     return this.tasksService.createTasks(createTaskDto);
+  }
+
+  @Patch('/:id/status')
+  updateTaskStatus(
+    @Param('id') id: string,
+    @Body('status') status: TaskStatus, // look for "status" in req body, without using DTO
+  ): Task {
+    return this.tasksService.updateTaskStatus(id, status);
   }
 
   @Delete('/:id')
