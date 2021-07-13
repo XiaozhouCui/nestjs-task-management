@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './task.model';
 import { TasksService } from './tasks.service';
@@ -29,5 +29,11 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
   ): Task {
     return this.tasksService.createTasks(createTaskDto);
+  }
+
+  @Delete('/:id')
+  // delete will return void
+  deleteTask(@Param('id') id: string): void {
+    return this.tasksService.deleteTask(id);
   }
 }
