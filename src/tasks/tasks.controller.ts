@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './task.model';
 import { TasksService } from './tasks.service';
 
@@ -14,11 +15,11 @@ export class TasksController {
   }
 
   @Post()
-  // @Body: nestjs will look for 'title' and 'description' in req body
   createTask(
-    @Body('title') title: string,
-    @Body('description') description: string,
+    // @Body('title') title: string,
+    // @Body('description') description: string,
+    @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
   ): Task {
-    return this.tasksService.createTasks(title, description);
+    return this.tasksService.createTasks(createTaskDto);
   }
 }
