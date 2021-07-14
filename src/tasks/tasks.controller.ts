@@ -6,20 +6,27 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Task, TaskStatus } from './task.model';
 import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
-@Controller('tasks')
+@Controller('tasks') // arg 'tasks' is the path/route that the controller handles (/tasks)
 export class TasksController {
   // inject TasksService into TasksController, and initialise it as a private property
   constructor(private tasksService: TasksService) {}
 
-  // http://localhost:3000/tasks
-  @Get() // handle GET requests sent to /tasks
-  getAllTasks(): Task[] {
+  // http://localhost:3000/tasks?status=OPEN&search=room
+  @Get()
+  // DTO defines the shape of data of an incoming request, DTO is re-usable
+  getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
+    // if we have any filters defined (query parameters), call tasksService.getTasksWithFilters
+    if (Object.keys(filterDto).length)
+      return this.tasksService.getTasksWithFilters(filterDto);
+    // if no filters, just get all tasks
     return this.tasksService.getAllTasks();
   }
 
@@ -39,10 +46,11 @@ export class TasksController {
     return this.tasksService.createTasks(createTaskDto);
   }
 
+  // update only the status
   @Patch('/:id/status')
   updateTaskStatus(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus, // look for "status" in req body, without using DTO
+    @Body('status') status: TaskStatus, // look for "status" in req body, can't use DTO CreateTaskDto
   ): Task {
     return this.tasksService.updateTaskStatus(id, status);
   }

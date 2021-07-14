@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
+// @Injectable() is used to define that a certain class should have a shared instance across the module. The instance can then be injected using Dependency Injection, and all injectors will have access to the same instance and its state.
 @Injectable()
 export class TasksService {
   private tasks: Task[] = [];
@@ -10,6 +12,29 @@ export class TasksService {
   // methods are public by default
   getAllTasks(): Task[] {
     return this.tasks;
+  }
+
+  getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
+    const { status, search } = filterDto;
+
+    // define a temporary array to hold the result
+    let tasks = this.getAllTasks();
+
+    // filter by status
+    if (status) {
+      tasks = tasks.filter((t) => t.status === status);
+    }
+
+    // filter by key-word in title and description
+    if (search) {
+      tasks = tasks.filter((t) => {
+        if (t.title.includes(search) || t.description.includes(search)) {
+          return true;
+        }
+        return false;
+      });
+    }
+    return tasks;
   }
 
   getTaskById(id: string): Task {

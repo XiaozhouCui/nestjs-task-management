@@ -1,3 +1,7 @@
+## Project setup
+- Install nest CLI `npm i -g @nestjs/cli`
+- Create project with nest CLI `nest new nestjs-task-management`
+
 ## Create tasks module
 - Run `nest g module tasks`
 - This will generate */tasks/tasks.module.ts*, and update *app.module.ts* to include `TasksModule` 
