@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { Task, TaskStatus } from './task.model';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { Task } from './task.model';
 import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
@@ -50,8 +51,9 @@ export class TasksController {
   @Patch('/:id/status')
   updateTaskStatus(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus, // look for "status" in req body, can't use DTO CreateTaskDto
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto, // enum validation happens here
   ): Task {
+    const { status } = updateTaskStatusDto;
     return this.tasksService.updateTaskStatus(id, status);
   }
 

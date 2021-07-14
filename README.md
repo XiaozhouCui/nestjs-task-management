@@ -19,5 +19,7 @@
 
 ## Add pipeline for validation
 - Install packages `yarn add class-validator class-transformer`
+- Wire up `ValidationPipe` in *main.ts*
 - Add validation decorator to DTO properties, failed validation will result in 400 response
-- 
+- Add `throw new NotFoundException()` in service getTaskById() will auto handled by nestjs and auto return 404 
+- Add enum validation to the TaskStatus enum
