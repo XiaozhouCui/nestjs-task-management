@@ -1,6 +1,11 @@
-// DTO is easy to update, only change one place here, single source of truth
+import { IsNotEmpty } from 'class-validator';
+// DTO is single source of truth, only change in one place
+// DTO is good for validation
 export class CreateTaskDto {
-  // outline the shape of data
+  // IsNotEmpty decorator is used for validation
+  @IsNotEmpty() // failed validation will result in 400 error
   title: string;
+
+  @IsNotEmpty()
   description: string;
 }

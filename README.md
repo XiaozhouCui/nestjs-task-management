@@ -16,3 +16,8 @@
 - This will generate */tasks/tasks.service.ts*, and update *tasks.module.ts* to add `TasksService` to service providers
 - Now `TasksService` can be injected into the constructor of `TasksController`, and initialised as a private property
 - Implement CRUD operations in service and handle them in controller
+
+## Add pipeline for validation
+- Install packages `yarn add class-validator class-transformer`
+- Add validation decorator to DTO properties, failed validation will result in 400 response
+- 
