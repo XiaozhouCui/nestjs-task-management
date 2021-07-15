@@ -13,7 +13,7 @@ import { TasksModule } from './tasks/tasks.module';
       username: 'postgres',
       password: 'postgres',
       database: 'task-management',
-      autoLoadEntities: true,
+      autoLoadEntities: true, // search and load task.entity.ts
       synchronize: true, // keep db schema in sync, no migrations
     }),
   ],
