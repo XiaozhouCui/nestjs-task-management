@@ -38,14 +38,14 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
-  // @Post()
-  // createTask(
-  //   // @Body('title') title: string,
-  //   // @Body('description') description: string,
-  //   @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
-  // ): Task {
-  //   return this.tasksService.createTasks(createTaskDto);
-  // }
+  @Post()
+  createTask(
+    // @Body('title') title: string,
+    // @Body('description') description: string,
+    @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
+  ): Promise<Task> {
+    return this.tasksService.createTasks(createTaskDto);
+  }
 
   // // update only the status
   // @Patch('/:id/status')

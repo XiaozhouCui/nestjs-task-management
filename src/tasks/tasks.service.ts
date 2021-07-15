@@ -64,19 +64,11 @@ export class TasksService {
   //   return found;
   // }
 
-  // // service to create a task
-  // createTasks(createTaskDto: CreateTaskDto): Task {
-  //   const { title, description } = createTaskDto;
-  //   const task: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-
-  //   this.tasks.push(task);
-  //   return task;
-  // }
+  // service to create a task
+  createTasks(createTaskDto: CreateTaskDto): Promise<Task> {
+    // the create-task logic is moved into repository, easy to test
+    return this.tasksRepository.createTask(createTaskDto); // returns a promise
+  }
 
   // updateTaskStatus(id: string, status: TaskStatus): Task {
   //   const task = this.getTaskById(id); // auto handle non-exist id
