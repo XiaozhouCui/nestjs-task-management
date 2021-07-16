@@ -55,26 +55,18 @@ export class TasksService {
     return found;
   }
 
-  // getTaskById(id: string): Task {
-  //   const found = this.tasks.find((t) => t.id === id);
-  //   if (!found) {
-  //     // the thrown error will bubble up be handled in the internals of nestjs, auto mapped to 404
-  //     throw new NotFoundException(`Tasks with ID "${id}" not found`);
-  //   }
-  //   return found;
-  // }
-
   // service to create a task
   createTasks(createTaskDto: CreateTaskDto): Promise<Task> {
     // the create-task logic is moved into repository, easy to test
     return this.tasksRepository.createTask(createTaskDto); // returns a promise
   }
 
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id); // auto handle non-exist id
-  //   task.status = status;
-  //   return task;
-  // }
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id); // auto handle non-exist id (404)
+    task.status = status;
+    await this.tasksRepository.save(task);
+    return task;
+  }
 
   async deleteTask(id: string): Promise<void> {
     const result = await this.tasksRepository.delete(id);
