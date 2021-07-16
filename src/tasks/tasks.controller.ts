@@ -20,16 +20,12 @@ export class TasksController {
   // inject TasksService into TasksController, and initialise it as a private property
   constructor(private tasksService: TasksService) {}
 
-  // // http://localhost:3000/tasks?status=OPEN&search=room
-  // @Get()
-  // // DTO defines the shape of data of an incoming request, DTO is re-usable
-  // getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-  //   // if we have any filters defined (query parameters), call tasksService.getTasksWithFilters
-  //   if (Object.keys(filterDto).length)
-  //     return this.tasksService.getTasksWithFilters(filterDto);
-  //   // if no filters, just get all tasks
-  //   return this.tasksService.getAllTasks();
-  // }
+  // http://localhost:3000/tasks?status=OPEN&search=room
+  @Get()
+  // DTO defines the shape of data of an incoming request, DTO is re-usable
+  getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksService.getTaasks(filterDto);
+  }
 
   // http://localhost:3000/tasks/:id
   @Get('/:id')

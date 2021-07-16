@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { TasksRepository } from './task.repository';
+import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 
@@ -15,33 +15,9 @@ export class TasksService {
     private tasksRepository: TasksRepository,
   ) {}
 
-  // // methods are public by default
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
-
-  // getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
-  //   const { status, search } = filterDto;
-
-  //   // define a temporary array to hold the result
-  //   let tasks = this.getAllTasks();
-
-  //   // filter by status
-  //   if (status) {
-  //     tasks = tasks.filter((t) => t.status === status);
-  //   }
-
-  //   // filter by key-word in title and description
-  //   if (search) {
-  //     tasks = tasks.filter((t) => {
-  //       if (t.title.includes(search) || t.description.includes(search)) {
-  //         return true;
-  //       }
-  //       return false;
-  //     });
-  //   }
-  //   return tasks;
-  // }
+  getTaasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksRepository.getTasks(filterDto);
+  }
 
   async getTaskById(id: string): Promise<Task> {
     // try to get the task from database, db operations are async
