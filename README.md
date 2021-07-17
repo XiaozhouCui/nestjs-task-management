@@ -46,3 +46,11 @@
 - In _tasks.module.ts_, import `TasksRepository` so that it can be injected anywhere in the module.
 - Refactor the services and controllers to use TypeORM
 - Move the create-task logic from service into repository
+- Refactor the remaining CRUD operations with TypeORM and repositories
+
+## Scafold auth module
+
+- Run `nest g module auth` to generate a new auth module, this will create *auth.module.ts* and update *app.module.ts*
+- Run `nest g service auth --no-spec` to generate auth service, this will create *auth.service.ts* and update *auth.module.ts*
+- Run `nest g controller auth --no-spec` to generate auth controller, this will create *auth.controller.ts* and update *auth.module.ts*
+- Start the app and make sure everything works
