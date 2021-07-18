@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
@@ -16,6 +18,7 @@ import { TasksService } from './tasks.service';
 
 // @Controller decorator specifies a controller
 @Controller('tasks') // arg 'tasks' is the path/route that the controller handles (/tasks)
+@UseGuards(AuthGuard()) // protect all task routes with AuthGuard from passport
 export class TasksController {
   // inject TasksService into TasksController, and initialise it as a private property
   constructor(private tasksService: TasksService) {}

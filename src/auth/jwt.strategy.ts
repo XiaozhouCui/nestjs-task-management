@@ -22,6 +22,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // at this point, we already know the token is valid
+  // overwrite the default validate() method from base class
   async validate(payload: JwtPayload): Promise<User> {
     const { username } = payload;
     // fetch user from db
