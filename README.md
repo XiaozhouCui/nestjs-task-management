@@ -68,5 +68,8 @@
 - Update auth controller to make the `auth/signin` endpoint work.
 
 ## Add JWT authentication
-- Install 4 packages `yarn add @nestjs/jwt @nestjs/passport passport passport-jwt`
-- Add passport and JWT (with options) in auth module `imports` array.
+- Install 5 packages `yarn add @nestjs/jwt @nestjs/passport passport passport-jwt @types/passport-jwt`
+- Add passport and JWT (with options) in auth module `imports` array, it will export a JwtService to sign tokens
+- Once imported, use DI to inject `JwtService` into auth service, use `this.jwtService.sign(payload)` to sign tokens
+- Create *jwt.stragegy.ts*, use **passport** to prepare an auth mechanism
+- **passport** is going to inject the user into the request object of our controller (similar to auth middleware in express?).
