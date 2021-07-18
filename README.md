@@ -54,3 +54,19 @@
 - Run `nest g service auth --no-spec` to generate auth service, this will create *auth.service.ts* and update *auth.module.ts*
 - Run `nest g controller auth --no-spec` to generate auth controller, this will create *auth.controller.ts* and update *auth.module.ts*
 - Start the app and make sure everything works
+
+## Sign up
+- Add `AuthCredentialsDto` to handle username and password
+- Add *user.repository.ts* and `createUser()` method to generate a new record in users table in database
+- Install `bcrypt` (not bcryptjs) to hash the password before saving new user to db.
+- Update auth service and auth controller to make the `/auth/signup` endpoint work.
+
+## Sign in
+- In auth service (not repository), add a method `signIn()`
+- Call the `.findOne()` method of the injected user repository, to get the user data from db
+- Use `bcrypt` to compare the submitted password against the hashed password in db.
+- Update auth controller to make the `auth/signin` endpoint work.
+
+## Add JWT authentication
+- Install 4 packages `yarn add @nestjs/jwt @nestjs/passport passport passport-jwt`
+- Add passport and JWT (with options) in auth module `imports` array.
