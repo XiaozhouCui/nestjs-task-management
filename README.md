@@ -73,3 +73,6 @@
 - Once imported, use DI to inject `JwtService` into auth service, use `this.jwtService.sign(payload)` to sign tokens
 - Create *jwt.stragegy.ts*, use **passport** to prepare an auth mechanism
 - **passport** is going to inject the user into the request object of our controller (similar to auth middleware in express?).
+
+## Task Ownership and Restrictions
+- Setup 1-to-many relationship in User entity, setup many-to-1 relationship in Task entity
