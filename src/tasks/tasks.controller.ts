@@ -10,6 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
@@ -42,8 +44,9 @@ export class TasksController {
     // @Body('title') title: string,
     // @Body('description') description: string,
     @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
+    @GetUser() user: User, // custom decorator @GetUser: get user from request
   ): Promise<Task> {
-    return this.tasksService.createTasks(createTaskDto);
+    return this.tasksService.createTasks(createTaskDto, user);
   }
 
   // update only the status

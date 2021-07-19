@@ -18,5 +18,5 @@ export class Task {
 
   // many tasks are assigned to one user
   @ManyToOne((_type) => User, (user) => user.tasks, { eager: false })
-  user: User[];
+  user: User;
 }

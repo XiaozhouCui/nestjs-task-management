@@ -5,6 +5,7 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
+import { User } from 'src/auth/user.entity';
 
 // @Injectable() is used to define that a certain class should have a shared instance across the module. The instance can then be injected using Dependency Injection, and all injectors will have access to the same instance and its state.
 @Injectable()
@@ -32,9 +33,9 @@ export class TasksService {
   }
 
   // service to create a task
-  createTasks(createTaskDto: CreateTaskDto): Promise<Task> {
+  createTasks(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     // the create-task logic is moved into repository, easy to test
-    return this.tasksRepository.createTask(createTaskDto); // returns a promise
+    return this.tasksRepository.createTask(createTaskDto, user); // returns a promise
   }
 
   async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
