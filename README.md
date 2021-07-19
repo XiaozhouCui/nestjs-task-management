@@ -76,3 +76,5 @@
 
 ## Task Ownership and Restrictions
 - Setup 1-to-many relationship in User entity, setup many-to-1 relationship in Task entity
+- Use custom decorator `@GetUser` in tasks controller to get user from request and save user as a property of new task.
+- Add and wire up global interceptor to serialize and exclude sensitive user data
