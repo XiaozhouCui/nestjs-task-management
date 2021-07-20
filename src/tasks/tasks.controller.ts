@@ -28,8 +28,11 @@ export class TasksController {
   // http://localhost:3000/tasks?status=OPEN&search=room
   @Get()
   // DTO defines the shape of data of an incoming request, DTO is re-usable
-  getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
-    return this.tasksService.getTaasks(filterDto);
+  getTasks(
+    @Query() filterDto: GetTasksFilterDto,
+    @GetUser() user: User,
+  ): Promise<Task[]> {
+    return this.tasksService.getTaasks(filterDto, user);
   }
 
   // http://localhost:3000/tasks/:id

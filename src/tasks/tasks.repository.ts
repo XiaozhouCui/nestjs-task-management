@@ -8,10 +8,13 @@ import { Task } from './task.entity';
 // use Task entity as generic type in Repository
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
     // TypeORM query builder
     const query = this.createQueryBuilder('task');
+
+    // only fetch the tasks of current user
+    query.where({ user });
 
     if (status) {
       // :status can be anything, need to match the key in 2nd arg ('status')
