@@ -10,7 +10,7 @@ import { Task } from './task.entity';
 export class TasksRepository extends Repository<Task> {
   async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
-    // TypeORM query builder
+    // TypeORM query builder method, from base class "Repository"
     const query = this.createQueryBuilder('task');
 
     // only fetch the tasks of current user
@@ -24,8 +24,9 @@ export class TasksRepository extends Repository<Task> {
 
     if (search) {
       // LOWER() makes sure the search is case-insensitive
+      // need to wrap following statement inside "()", to separate from previous WHERE
       query.andWhere(
-        'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         { search: `%${search}%` },
       );
       // WHERE task.title LIKE '%cook%' OR task.description LIKE '%cook%'

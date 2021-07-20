@@ -20,9 +20,10 @@ export class TasksService {
     return this.tasksRepository.getTasks(filterDto, user);
   }
 
-  async getTaskById(id: string): Promise<Task> {
+  async getTaskById(id: string, user: User): Promise<Task> {
     // try to get the task from database, db operations are async
-    const found = await this.tasksRepository.findOne(id);
+    // const found = await this.tasksRepository.findOne(id);
+    const found = await this.tasksRepository.findOne({ where: { id, user } }); // only search the task of current user
     // if not found, throw an error 404
     if (!found) {
       // the thrown error will bubble up and be handled in the internals of nestjs, auto mapped to 404
@@ -38,15 +39,19 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto, user); // returns a promise
   }
 
-  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-    const task = await this.getTaskById(id); // auto handle non-exist id (404)
+  async updateTaskStatus(
+    id: string,
+    status: TaskStatus,
+    user: User,
+  ): Promise<Task> {
+    const task = await this.getTaskById(id, user); // auto handle non-exist id (404)
     task.status = status;
     await this.tasksRepository.save(task);
     return task;
   }
 
-  async deleteTask(id: string): Promise<void> {
-    const result = await this.tasksRepository.delete(id);
+  async deleteTask(id: string, user: User): Promise<void> {
+    const result = await this.tasksRepository.delete({ id, user }); // DELETE ... WHERE id=id AND user=user
     // console.log(result); // DeleteResult { raw: [], affected: 1 }
     if (result.affected === 0) {
       throw new NotFoundException(`Task with ID "${id}" not found.`);
