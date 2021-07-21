@@ -78,3 +78,16 @@
 - Setup 1-to-many relationship in User entity, setup many-to-1 relationship in Task entity
 - Use custom decorator `@GetUser` in tasks controller to get user from request and save user as a property of new task.
 - Add and wire up global interceptor to serialize and exclude sensitive user data
+
+## Logging
+- Logger class is included in @nestjs/common
+- To use logger in each class, need to instanciate Logger class with context (arg)
+- Logger has different levels, such as `log`, `verbose` and `error`
+
+## Environment variables
+- On Windows, need to install win-node-env globally `npm install -g win-node-env`
+- With win-node-env, we can prepend `NODE_ENV=dev` infront of `nest start --watch` in *package.json*
+- Install config for nestjs `yarn add @nestjs/config`
+- In *app.module.ts*, add ConfigModule into `imports`, and set path for env files *.env.stage.dev* and *.env.stage.prod*
+- In *tasks.module.ts* import ConfigModule, which will expose an injectable service `ConfigService`
+- In task controller, inject and initialise `ConfigService`, use the configService instance to access environment variable in .env files

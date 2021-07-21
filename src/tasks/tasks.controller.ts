@@ -10,6 +10,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
@@ -26,7 +27,13 @@ export class TasksController {
   // initialise logger as a class member with a context 'TasksController', to identify where the log comes from
   private logger = new Logger('TasksController');
   // inject TasksService into TasksController, and initialise it as a private property
-  constructor(private tasksService: TasksService) {}
+  constructor(
+    private tasksService: TasksService,
+    private configService: ConfigService,
+  ) {
+    // access the environment variables like this:
+    console.log(configService.get('TEST_VALUE'));
+  }
 
   // http://localhost:3000/tasks?status=OPEN&search=room
   @Get()

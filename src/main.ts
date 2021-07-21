@@ -6,7 +6,8 @@ import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   // initialise logger
-  const logger = new Logger();
+  const logger = new Logger('main.ts');
+  logger.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   // create a new nestjs app with root module AppModule
   const app = await NestFactory.create(AppModule);
   // whenever there is a validation decorator, it goes to ValidationPipe
