@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -22,16 +23,24 @@ import { TasksService } from './tasks.service';
 @Controller('tasks') // arg 'tasks' is the path/route that the controller handles (/tasks)
 @UseGuards(AuthGuard()) // protect all task routes with AuthGuard from passport
 export class TasksController {
+  // initialise logger as a class member with a context 'TasksController', to identify where the log comes from
+  private logger = new Logger('TasksController');
   // inject TasksService into TasksController, and initialise it as a private property
   constructor(private tasksService: TasksService) {}
 
   // http://localhost:3000/tasks?status=OPEN&search=room
   @Get()
-  // DTO defines the shape of data of an incoming request, DTO is re-usable
   getTasks(
+    // DTO defines the shape of data of an incoming request, DTO is re-usable
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: User, // custom decorator @GetUser: get user from request
   ): Promise<Task[]> {
+    // verbose level logging
+    this.logger.verbose(
+      `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+        filterDto,
+      )}`,
+    );
     return this.tasksService.getTaasks(filterDto, user);
   }
 
@@ -49,6 +58,11 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto, // nestjs will look for DTO perperties (title and description) in req body
     @GetUser() user: User, // custom decorator @GetUser: get user from request
   ): Promise<Task> {
+    this.logger.verbose(
+      `User "${user.username}" creating a new task. Data: ${JSON.stringify(
+        createTaskDto,
+      )}`,
+    );
     return this.tasksService.createTasks(createTaskDto, user);
   }
 

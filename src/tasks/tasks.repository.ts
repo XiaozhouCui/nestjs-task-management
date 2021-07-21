@@ -1,3 +1,4 @@
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { User } from 'src/auth/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -8,6 +9,8 @@ import { Task } from './task.entity';
 // use Task entity as generic type in Repository
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
+  // instanciate new logger
+  private logger = new Logger('TasksRepository');
   async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
     // TypeORM query builder method, from base class "Repository"
@@ -32,9 +35,21 @@ export class TasksRepository extends Repository<Task> {
       // WHERE task.title LIKE '%cook%' OR task.description LIKE '%cook%'
     }
 
-    // use the modified query to get tasks
-    const tasks = await query.getMany();
-    return tasks;
+    try {
+      // use the modified query to get tasks
+      const tasks = await query.getMany();
+      return tasks;
+    } catch (error) {
+      // use error level log (red)
+      this.logger.error(
+        `Failed to get tasks for user "${
+          user.username
+        }". Filters: ${JSON.stringify(filterDto)}`,
+        // include stack trace in 2nd arg
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
   }
 
   async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
