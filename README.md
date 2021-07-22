@@ -91,3 +91,4 @@
 - In *app.module.ts*, add ConfigModule into `imports`, and set path for env files *.env.stage.dev* and *.env.stage.prod*
 - In *tasks.module.ts* import ConfigModule, which will expose an injectable service `ConfigService`
 - In task controller, inject and initialise `ConfigService`, use the configService instance to access environment variable in .env files
+- To connect to DB using environment variables, need to setup `TypeOrmModule.forRootAsync` and **DI** in *app.module.ts* file

@@ -32,7 +32,7 @@ export class TasksController {
     private configService: ConfigService,
   ) {
     // access the environment variables like this:
-    console.log(configService.get('TEST_VALUE'));
+    // console.log(configService.get('TEST_VALUE'));
   }
 
   // http://localhost:3000/tasks?status=OPEN&search=room
