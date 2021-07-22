@@ -92,3 +92,5 @@
 - In *tasks.module.ts* import ConfigModule, which will expose an injectable service `ConfigService`
 - In task controller, inject and initialise `ConfigService`, use the configService instance to access environment variable in .env files
 - To connect to DB using environment variables, need to setup `TypeOrmModule.forRootAsync` and **DI** in *app.module.ts* file
+- To validate config schema (environment variables), need to add JOI, `yarn add joi`, `yarn add -D @types/hapi__joi`
+- Add Joi validation in *config.schema.ts*, pass it into `ConfigModule.forRoot()` in app module, now we can detect environment variable issues in console.
