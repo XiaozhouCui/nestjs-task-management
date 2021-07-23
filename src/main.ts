@@ -10,6 +10,8 @@ async function bootstrap() {
   logger.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   // create a new nestjs app with root module AppModule
   const app = await NestFactory.create(AppModule);
+  // enable cors for the frontend
+  app.enableCors();
   // whenever there is a validation decorator, it goes to ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
   // use interceptor to transform JSON to exclude sensitive user information
