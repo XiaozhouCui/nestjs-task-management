@@ -48,7 +48,7 @@ export class TasksController {
         filterDto,
       )}`,
     );
-    return this.tasksService.getTaasks(filterDto, user);
+    return this.tasksService.getTasks(filterDto, user);
   }
 
   // http://localhost:3000/tasks/:id
